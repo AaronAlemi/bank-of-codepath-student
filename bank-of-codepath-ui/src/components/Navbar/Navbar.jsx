@@ -2,15 +2,23 @@ import * as React from "react"
 import FilterInput from "../FilterInput/FilterInput"
 import codepath from "../../assets/codepath.svg"
 import avatar from "../../assets/avatar.png"
+import { Link } from "react-router-dom"
 import "./Navbar.css"
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+  function handleOnInputChange(event) {
+    props.setFilterInputValue(event.target.value)
+}
+
   return (
     <nav className="navbar">
-      <a className="logo">Logo</a>
+      <a className="logo">
+        <Logo path="/"/>
+      </a>
 
       <div className="search">
-        <FilterInput />
+        <FilterInput inputValue={props.filterInputValue} handleOnChange={handleOnInputChange}/>
       </div>
 
       <div className="user">
@@ -19,7 +27,7 @@ export default function Navbar() {
           <div className="green-dot" />
         </div>
         <div className="avatar">
-          <img src={avatar} alt="avatar" />
+            <img src={avatar} alt="avatar" />
           <div className="info">
             <p>Person McPerson</p>
             <span>ID: 12345567</span>
@@ -30,10 +38,12 @@ export default function Navbar() {
   )
 }
 
-export function Logo() {
+export function Logo({path}) {
   return (
     <a className="logo">
-      <img src={codepath} alt="logo" />
+      <Link to={path}>
+        <img src={codepath} alt="logo" />
+      </Link>
     </a>
   )
 }
